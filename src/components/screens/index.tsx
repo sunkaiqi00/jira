@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as qs from "qs";
 
 import List from "./List";
 import SearchPanel from "./ScreenPanel";
 
 import { clearObject } from "../../utils";
+import useDebounce from "../../hooks/useDebounce";
+import useMount from "hooks/useMount";
 
 export interface SearchParam {
   name: string;
@@ -38,6 +40,7 @@ const ScreensProject = () => {
     name: "",
     personId: "",
   });
+  const debounceParam = useDebounce(param);
   const [users, setUsers] = useState<UserParam[]>([]);
   const [list, setList] = useState<ListParam[]>([]);
 
@@ -49,15 +52,17 @@ const ScreensProject = () => {
         }
       }
     );
-  }, [param]);
+  }, [debounceParam]);
 
-  useEffect(() => {
+  const fetchUsers = useCallback(() => {
     fetch(`${apiUrl}/users`).then(async (response) => {
       if (response.ok) {
         setUsers(await response.json());
       }
     });
   }, []);
+
+  useMount(fetchUsers);
 
   return (
     <div>
