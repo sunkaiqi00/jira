@@ -34,7 +34,9 @@ const ScreensProject = () => {
     name: "",
     personId: "",
   });
-  const debounceParam = useDebounce(param);
+
+  const debounceParam = useDebounce<SearchParam>(param);
+
   const [users, setUsers] = useState<UserParam[]>([]);
   const [list, setList] = useState<ListParam[]>([]);
 
