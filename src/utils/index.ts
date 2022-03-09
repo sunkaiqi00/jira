@@ -1,4 +1,4 @@
-export const isVoid = (value: unknown) =>
+export const isVoid = (value: unknown): boolean =>
   value === null || value === undefined || value === "";
 
 export const clearObject = (object: { [propName: string]: unknown }) => {

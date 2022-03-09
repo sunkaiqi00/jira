@@ -7,8 +7,6 @@ interface ListProps {
 }
 
 const List: FC<ListProps> = ({ list, users }) => {
-  console.log(users, list);
-
   return (
     <table>
       <thead>

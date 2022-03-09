@@ -14,12 +14,6 @@ export interface SearchParam {
   [propsName: string]: unknown;
 }
 
-// const data: SearchParam = {
-//   name: 'aa',
-//   personId: '1',
-//   address: 'china'
-// }
-
 export interface UserParam {
   id: number;
   name: string;
@@ -29,9 +23,9 @@ export interface ListParam {
   id: number;
   name: string;
   personId: number;
+  organization: string;
+  created: number;
 }
-
-console.log(process.env);
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
