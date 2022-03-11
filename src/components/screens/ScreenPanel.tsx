@@ -1,6 +1,7 @@
 import React, { FC } from "react";
+import { UserParam } from "types/user";
 
-import { SearchParam, UserParam } from "./";
+import { SearchParam } from "./";
 
 interface SearchPanelProps {
   param: SearchParam;

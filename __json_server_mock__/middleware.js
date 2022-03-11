@@ -4,7 +4,13 @@ module.exports = (req, res, next) => {
     if (userName === "admin" && password === "123456") {
       return res.status(200).json({
         user: {
-          token: "123",
+          name: userName,
+          id: Number(
+            Math.random()
+              .toString()
+              .slice(2, Math.ceil(Math.random() * 10))
+          ),
+          token: "DBUD4563=sdfhb2134sCABc",
         },
       });
     } else {

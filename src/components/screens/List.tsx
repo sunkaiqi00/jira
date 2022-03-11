@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { ListParam, UserParam } from "./";
+import { UserParam } from "types/user";
+import { ListParam } from "./";
 
 interface ListProps {
   list: ListParam[];

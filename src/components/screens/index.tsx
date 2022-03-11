@@ -7,16 +7,12 @@ import SearchPanel from "./ScreenPanel";
 import { clearObject } from "../../utils";
 import useDebounce from "../../hooks/useDebounce";
 import useMount from "hooks/useMount";
+import { UserParam } from "types/user";
 
 export interface SearchParam {
   name: string;
   personId: string;
   [propsName: string]: unknown;
-}
-
-export interface UserParam {
-  id: number;
-  name: string;
 }
 
 export interface ListParam {
