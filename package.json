@@ -10,6 +10,7 @@
     "@types/node": "^16.11.68",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -22,7 +23,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "pretty-quick": "pretty-quick"
+    "pretty-quick": "pretty-quick",
+    "json-server": "json-server __json-server-mock__/db.json --watch --port 6060"
   },
   "eslintConfig": {
     "extends": [
@@ -44,6 +46,7 @@
   },
   "devDependencies": {
     "husky": "^8.0.0",
+    "json-server": "^0.17.0",
     "lint-staged": "^13.0.3",
     "prettier": "2.7.1",
     "pretty-quick": "^3.1.3"
