@@ -5,6 +5,7 @@ import { UserInfo } from "../../types/user";
 import { ProjectInfo } from "../../types/project";
 import { cleanObject } from "../../utils/obj";
 import qs from "qs";
+import { useDebounce, useMount } from "../../hook";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 export interface SearchParam {
@@ -16,25 +17,26 @@ export default function ProjectList() {
     name: "",
     personId: "",
   });
+  const debounceParam = useDebounce<SearchParam>(param);
   const [users, setUsers] = useState<UserInfo[]>([]);
   const [projects, setProjects] = useState<ProjectInfo[]>([]);
 
-  useEffect(() => {
+  useMount(() => {
     fetch(`${apiUrl}/users`).then(async (res) => {
       if (res.ok) {
         setUsers((await res.json()) as UserInfo[]);
       }
     });
-  }, []);
+  });
   useEffect(() => {
-    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then(
-      async (res) => {
-        if (res.ok) {
-          setProjects((await res.json()) as ProjectInfo[]);
-        }
+    fetch(
+      `${apiUrl}/projects?${qs.stringify(cleanObject(debounceParam))}`
+    ).then(async (res) => {
+      if (res.ok) {
+        setProjects((await res.json()) as ProjectInfo[]);
       }
-    );
-  }, [param]);
+    });
+  }, [debounceParam]);
   return (
     <div>
       <SearchPanel param={param} users={users} setParam={setParam} />
