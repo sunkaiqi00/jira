@@ -24,7 +24,7 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "pretty-quick": "pretty-quick",
-    "json-server": "json-server __json-server-mock__/db.json --watch --port 6060"
+    "json-server": "json-server __json-server-mock__/db.json --watch --port 6060 --middlewares ./__json-server-mock__/middleware.js"
   },
   "eslintConfig": {
     "extends": [
