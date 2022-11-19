@@ -1,8 +1,8 @@
 import React, { FormEvent } from 'react';
 import { useAuth } from '../../context/auth-context';
 
-const Login = () => {
-  const { user, login } = useAuth();
+const Register = () => {
+  const { user, register } = useAuth();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -10,7 +10,7 @@ const Login = () => {
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    login({ username, password });
+    register({ username, password });
   };
 
   return (
@@ -25,10 +25,10 @@ const Login = () => {
         <input type="password" id="password" />
       </div>
       <div>
-        <button type="submit">登录</button>
+        <button type="submit">注册</button>
       </div>
     </form>
   );
 };
 
-export default Login;
+export default Register;
