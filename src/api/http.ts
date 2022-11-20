@@ -56,8 +56,3 @@ export const useHttp = () => {
     [user]
   );
 };
-
-const sum = (a: number, b: number) => a + b;
-
-type funType = typeof sum;
-type aaa = Parameters<funType>;
