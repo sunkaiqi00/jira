@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'antd';
 import { useAuth } from './context/auth-context';
 
 import ProjectList from './pages/project-list';
@@ -13,7 +14,7 @@ function App() {
         <div>
           <ProjectList />
           <div>
-            <button onClick={logout}>退出登录</button>
+            <Button onClick={logout}>退出登录</Button>
           </div>
         </div>
       ) : (
