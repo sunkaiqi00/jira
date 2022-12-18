@@ -4,7 +4,7 @@ import { useAuth } from './context/auth-context';
 
 import ProjectList from './pages/project-list';
 import UserAuth from './pages/user-auth';
-// import './App.css';
+import './App.css';
 
 function App() {
   const { user, logout } = useAuth();
