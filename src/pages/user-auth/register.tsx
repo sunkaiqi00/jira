@@ -11,21 +11,19 @@ const Register = () => {
   return (
     <Form onFinish={handleSubmit} labelCol={{ span: 4 }}>
       <Form.Item
-        label={'用户名：'}
         name={'username'}
         rules={[{ required: true, message: '请输入用户名' }]}
       >
-        <Input />
+        <Input placeholder="请输入用户名" />
       </Form.Item>
       <Form.Item
-        label={'密码：'}
         name={'password'}
         rules={[{ required: true, message: '请输入密码' }]}
       >
-        <Input />
+        <Input placeholder="请输入密码" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" block>
           注册
         </Button>
       </Form.Item>
