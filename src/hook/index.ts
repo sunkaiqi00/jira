@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useMount = (fn: Function) => {
   useEffect(() => {
     fn && fn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 

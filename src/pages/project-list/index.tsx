@@ -29,7 +29,8 @@ export default function ProjectList() {
   }, [debounceParam, http]);
 
   return (
-    <div>
+    <div style={{ padding: '2rem 3.2rem 0' }}>
+      <h2>项目列表</h2>
       <SearchPanel param={param} users={users} setParam={setParam} />
       <ProjectTable projects={projects} users={users} />
     </div>
