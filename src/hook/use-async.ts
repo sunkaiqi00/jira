@@ -1,9 +1,13 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 interface State<T> {
   stat: 'idle' | 'loading' | 'success' | 'error';
   data: T | null;
   error: Error | null;
+}
+
+interface Config {
+  throwOnError: boolean;
 }
 
 const defaultInitialState: State<null> = {
@@ -12,11 +16,19 @@ const defaultInitialState: State<null> = {
   error: null,
 };
 
-const useAsync = <T>(initialState?: State<T>) => {
+const defaultConfig = {
+  throwOnError: false,
+};
+
+const useAsync = <T>(initialState?: State<T>, initialConfig?: Config) => {
   const [state, setState] = useState({
     ...defaultInitialState,
     ...(initialState || {}),
   });
+  const config = {
+    ...defaultConfig,
+    ...(initialConfig || {}),
+  };
 
   const setData = (data: T) => setState({ data, stat: 'success', error: null });
 
@@ -36,7 +48,7 @@ const useAsync = <T>(initialState?: State<T>) => {
       })
       .catch((error) => {
         setError(error);
-        return error;
+        return config.throwOnError ? Promise.reject(error) : error;
       });
   };
 
