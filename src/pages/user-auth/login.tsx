@@ -1,12 +1,19 @@
-import React, { FormEvent } from 'react';
-import { Form, Input, Button } from 'antd';
+import React from 'react';
+import { Form, Input, Button, message } from 'antd';
 import { AuthFrom, useAuth } from '../../context/auth-context';
+import useAsync from 'hook/use-async';
 
 const Login = () => {
   const { login } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
-  const handleSubmit = (values: AuthFrom) => {
-    login(values);
+  const handleSubmit = async (values: AuthFrom) => {
+    try {
+      await run(login(values));
+      message.success('登录成功，即将跳转至首页');
+    } catch (error: any) {
+      message.error(error.message);
+    }
   };
 
   return (
@@ -24,7 +31,7 @@ const Login = () => {
         <Input placeholder="请输入密码" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
+        <Button loading={isLoading} type="primary" htmlType="submit" block>
           登录
         </Button>
       </Form.Item>
