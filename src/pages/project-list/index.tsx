@@ -4,7 +4,7 @@ import ProjectTable from './project-table';
 import { UserInfo } from '../../types/user';
 import { ProjectInfo } from '../../types/project';
 import { cleanObject } from '../../utils/obj';
-import { useDebounce, useMount } from '../../hook';
+import { useDebounce, useDocumentTitle, useMount } from '../../hook';
 import { useHttp } from '../../api/http';
 export interface SearchParam {
   name: string;
@@ -19,6 +19,8 @@ export default function ProjectList() {
   const [users, setUsers] = useState<UserInfo[]>([]);
   const [projects, setProjects] = useState<ProjectInfo[]>([]);
   const http = useHttp();
+
+  useDocumentTitle('项目列表页', false);
 
   useMount(() => {
     http('/users').then(setUsers);
