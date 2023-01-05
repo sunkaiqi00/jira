@@ -30,7 +30,6 @@ const PageHeader = () => {
           menu={{
             items: dropMenus,
             onClick: (key) => {
-              console.log(key);
               logout();
             },
           }}

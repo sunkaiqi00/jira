@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Divider, Form, Input } from 'antd';
+import { Divider } from 'antd';
 
 import Login from './login';
 import Register from './register';

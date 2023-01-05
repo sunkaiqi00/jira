@@ -1,18 +1,18 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { Table } from 'antd';
+import { Table, TableProps } from 'antd';
 
 import { ProjectInfo } from '../../types/project';
 import { UserInfo } from '../../types/user';
 
-const ProjectTable: FC<{ projects: ProjectInfo[]; users: UserInfo[] }> = ({
-  projects,
-  users,
-}) => {
+interface ProjectTableProps extends TableProps<ProjectInfo> {
+  users: UserInfo[];
+}
+
+const ProjectTable: FC<ProjectTableProps> = ({ users, ...props }) => {
   return (
     <Table
-      dataSource={projects}
       columns={[
         {
           title: '名称',
@@ -39,7 +39,8 @@ const ProjectTable: FC<{ projects: ProjectInfo[]; users: UserInfo[] }> = ({
         },
       ]}
       rowKey={(record) => record.id}
-    ></Table>
+      {...props}
+    />
   );
 };
 
