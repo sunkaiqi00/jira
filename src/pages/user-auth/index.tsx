@@ -11,9 +11,12 @@ import {
   ShadowCard,
   Title,
 } from './styled';
+import { useDocumentTitle } from 'hooks';
 
 const UserAuth = () => {
   const [isLogin, setIsLogin] = useState(true);
+
+  useDocumentTitle('登陆注册页');
 
   return (
     <Container>

@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Table, TableProps } from 'antd';
+
 import { ProjectInfo } from '../../types/project';
 import { UserInfo } from '../../types/user';
 
@@ -14,8 +16,11 @@ const ProjectTable: FC<ProjectTableProps> = ({ users, ...props }) => {
       columns={[
         {
           title: '名称',
-          dataIndex: 'name',
-          sorter: (a, b) => a.name.localeCompare(b.name),
+          render: (values, project) => (
+            <Link to={String(project.id)}>{project.name}</Link>
+          ),
+          // dataIndex: 'name',
+          // sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
           title: '部门',

@@ -2,8 +2,8 @@ import { createContext, ReactNode, useContext } from 'react';
 import { UserInfo } from '../types/user';
 import * as auth from '../auth-provider';
 import { http } from '../api/http';
-import { useMount } from '../hook';
-import useAsync from 'hook/use-async';
+import { useMount } from '../hooks';
+import useAsync from 'hooks/use-async';
 import { FullPageError, FullPageLoading } from 'components/lib';
 import { DevTools } from 'jira-dev-tool';
 
