@@ -6,7 +6,7 @@ import { UserInfo } from '../../types/user';
 const SearchPanel: FC<{
   param: SearchParam;
   users: UserInfo[];
-  setParam: React.Dispatch<SearchParam>;
+  setParam: (params: SearchParam) => void;
 }> = ({ param, setParam, users }) => {
   return (
     <Form layout="inline" style={{ marginBottom: '2rem' }}>
@@ -24,7 +24,7 @@ const SearchPanel: FC<{
       </Form.Item>
       <Form.Item>
         <Select
-          value={param.personId}
+          value={Number(param.personId)}
           onChange={(value) =>
             setParam({
               ...param,

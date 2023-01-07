@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { AuthFrom, useAuth } from '../../context/auth-context';
-import useAsync from 'hook/use-async';
+import useAsync from 'hooks/use-async';
 
 const Login = () => {
   const { login } = useAuth();
