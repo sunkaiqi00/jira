@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router';
+import { Routes, Route, Navigate } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
 import { useAuth } from 'context/auth-context';
@@ -20,6 +20,7 @@ const ContainerWrapper = () => {
           <Routes>
             <Route path="/projects" element={<ProjectList />} />
             <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
+            <Route path="*" element={<Navigate to={'/projects'} />} />
           </Routes>
         </Container>
       ) : (

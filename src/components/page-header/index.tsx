@@ -1,13 +1,15 @@
 import React from 'react';
-
 import { Button, Dropdown, MenuProps } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-import { Header, HeaderLeft, HeaderRight } from './styled';
-
-import { ReactComponent as SoftWareLogo } from '../../assets/software-logo.svg';
 import { useAuth } from 'context/auth-context';
 
+import { Header, HeaderLeft, HeaderRight } from './styled';
+import { ReactComponent as SoftWareLogo } from '../../assets/software-logo.svg';
+
 const PageHeader = () => {
+  const navigate = useNavigate();
+
   const { logout, user } = useAuth();
 
   const dropMenus: MenuProps['items'] = [
@@ -19,7 +21,13 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Button type="link" onClick={() => {}} style={{ padding: '0 15px' }}>
+        <Button
+          type="link"
+          onClick={() => {
+            navigate('/');
+          }}
+          style={{ padding: '0 15px' }}
+        >
           <SoftWareLogo width="12rem" color="rgb(38, 132, 255)" />
         </Button>
         <h3>项目</h3>

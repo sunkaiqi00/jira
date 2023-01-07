@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ContainerWrapper from 'pages/container';
+import ContainerWrapper from 'components/container';
 
 import './App.css';
 
