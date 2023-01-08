@@ -1,7 +1,8 @@
 import { useHttp } from 'api/http';
 import { useMount } from 'hooks';
+import { useUrlQueryParams } from 'hooks/url';
 import useAsync from 'hooks/use-async';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { ProjectInfo } from 'types/project';
 import { UserInfo } from 'types/user';
 import { cleanObject } from 'utils/obj';
@@ -33,4 +34,16 @@ export const useUsers = () => {
     run,
     ...result,
   };
+};
+
+// 项目有列表搜索参数
+export const useProjectSearchParams = () => {
+  const [param, setParam] = useUrlQueryParams(['name', 'personId']);
+  return [
+    useMemo(
+      () => ({ ...param, personId: Number(param.personId) || undefined }),
+      [param]
+    ),
+    setParam,
+  ] as const;
 };
