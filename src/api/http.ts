@@ -22,7 +22,7 @@ export const http = (
     ...customConfig,
   };
 
-  let _url = '';
+  let _url = url;
   if (config.method.toUpperCase() === 'GET') {
     _url = url + `?${qs.stringify(data)}`;
   } else {

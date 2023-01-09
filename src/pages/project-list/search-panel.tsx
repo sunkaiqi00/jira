@@ -1,4 +1,5 @@
 import { Form, Input, Select } from 'antd';
+import UserSelect from 'components/user-select';
 import React, { FC } from 'react';
 import { SearchParam } from '.';
 import { UserInfo } from '../../types/user';
@@ -23,22 +24,17 @@ const SearchPanel: FC<{
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        <UserSelect
           value={Number(param.personId)}
+          options={users}
           onChange={(value) =>
             setParam({
               ...param,
               personId: value,
             })
           }
-        >
-          <Select.Option value={''}>负责人</Select.Option>
-          {users.map((user) => (
-            <Select.Option key={user.id} value={user.id}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+          defaultOptionName="负责人"
+        />
       </Form.Item>
     </Form>
   );

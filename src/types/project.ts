@@ -4,4 +4,5 @@ export interface ProjectInfo {
   personId: number;
   organization: string;
   created: number;
+  pin: boolean;
 }
