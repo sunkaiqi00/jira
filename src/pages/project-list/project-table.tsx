@@ -3,17 +3,29 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Table, TableProps } from 'antd';
 
-import { ProjectInfo } from '../../types/project';
-import { UserInfo } from '../../types/user';
+import { ProjectInfo } from 'types/project';
+import { UserInfo } from 'types/user';
+import Pin from 'components/pin';
+import { useEditProject } from './util';
 
 interface ProjectTableProps extends TableProps<ProjectInfo> {
   users: UserInfo[];
+  refresh: () => void;
 }
 
-const ProjectTable: FC<ProjectTableProps> = ({ users, ...props }) => {
+const ProjectTable: FC<ProjectTableProps> = ({ users, refresh, ...props }) => {
+  const { edit } = useEditProject();
+  const editProject = (id: number) => (pin: boolean) =>
+    edit({ id, pin }).then(refresh);
   return (
     <Table
       columns={[
+        {
+          title: <Pin checked={true} disabled={true} />,
+          render: (_, project) => (
+            <Pin checked={project.pin} onChecked={editProject(project.id)} />
+          ),
+        },
         {
           title: '名称',
           render: (values, project) => (

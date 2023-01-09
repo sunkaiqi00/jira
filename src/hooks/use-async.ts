@@ -25,6 +25,9 @@ const useAsync = <T>(initialState?: State<T>, initialConfig?: Config) => {
     ...defaultInitialState,
     ...(initialState || {}),
   });
+
+  const [retry, setRetry] = useState(() => () => {});
+
   const config = {
     ...defaultConfig,
     ...(initialConfig || {}),
@@ -35,10 +38,18 @@ const useAsync = <T>(initialState?: State<T>, initialConfig?: Config) => {
   const setError = (error: Error) =>
     setState({ error, stat: 'error', data: null });
 
-  const run = (promiseRequest: Promise<T>) => {
+  const run = (
+    promiseRequest: Promise<T>,
+    retryConfig?: { retry: () => Promise<T> }
+  ) => {
     if (!promiseRequest || !promiseRequest.then) {
       throw new Error('请传入 promise 数据类型');
     }
+
+    if (retryConfig?.retry) {
+      setRetry(() => () => run(retryConfig.retry(), retryConfig));
+    }
+
     setState({ ...state, stat: 'loading' });
 
     return promiseRequest
@@ -60,6 +71,7 @@ const useAsync = <T>(initialState?: State<T>, initialConfig?: Config) => {
     setData,
     setError,
     run,
+    retry,
     ...state,
   };
 };

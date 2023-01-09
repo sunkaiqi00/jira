@@ -11,8 +11,10 @@ import { SearchParam } from '.';
 export const useProjects = (searchParam: SearchParam) => {
   const http = useHttp();
   const { run, data, ...result } = useAsync<ProjectInfo[]>();
+  const getProject = () =>
+    http('/projects', { data: cleanObject(searchParam || {}) });
   useEffect(() => {
-    run(http('/projects', { data: cleanObject(searchParam) }));
+    run(getProject(), { retry: getProject });
   }, [searchParam]);
 
   return {
@@ -46,4 +48,40 @@ export const useProjectSearchParams = () => {
     ),
     setParam,
   ] as const;
+};
+
+// 编辑
+export const useEditProject = () => {
+  const { run, ...result } = useAsync();
+  const http = useHttp();
+  const edit = (params: Partial<ProjectInfo>) => {
+    return run(
+      http(`/projects/${params.id}`, {
+        method: 'PATCH',
+        data: params,
+      })
+    );
+  };
+  return {
+    edit,
+    ...result,
+  };
+};
+
+// 新增
+export const useAddProject = () => {
+  const { run, ...result } = useAsync();
+  const http = useHttp();
+  const add = (params: Partial<ProjectInfo>) => {
+    return run(
+      http(`/projects/${params.id}`, {
+        method: 'POST',
+        data: params,
+      })
+    );
+  };
+  return {
+    add,
+    ...result,
+  };
 };

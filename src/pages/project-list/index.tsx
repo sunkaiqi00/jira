@@ -15,7 +15,7 @@ export default function ProjectList() {
   const [param, setParam] = useProjectSearchParams();
   const debounceParam = useDebounce<SearchParam>(param);
 
-  const { projects, isLoading, error } = useProjects(debounceParam);
+  const { projects, isLoading, error, retry } = useProjects(debounceParam);
   const { users } = useUsers();
 
   return (
@@ -26,7 +26,12 @@ export default function ProjectList() {
       {error ? (
         <Typography.Text type={'danger'}>{error.message}</Typography.Text>
       ) : null}
-      <ProjectTable dataSource={projects} users={users} loading={isLoading} />
+      <ProjectTable
+        refresh={retry}
+        dataSource={projects}
+        users={users}
+        loading={isLoading}
+      />
     </div>
   );
 }
