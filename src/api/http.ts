@@ -53,6 +53,6 @@ export const useHttp = () => {
         ...config,
         token: user?.token,
       }),
-    [user]
+    [user?.token]
   );
 };

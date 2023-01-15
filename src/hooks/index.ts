@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 
 export const useMount = (fn: Function) => {
   useEffect(() => {
-    fn && fn();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fn?.();
+  }, [fn]);
 };
 
 export const useDebounce = <T>(value: T, delay: number = 300): T => {

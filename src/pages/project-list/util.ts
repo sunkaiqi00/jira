@@ -2,7 +2,7 @@ import { useHttp } from 'api/http';
 import { useMount } from 'hooks';
 import { useUrlQueryParams } from 'hooks/url';
 import useAsync from 'hooks/use-async';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { ProjectInfo } from 'types/project';
 import { UserInfo } from 'types/user';
 import { cleanObject } from 'utils/obj';
@@ -11,11 +11,13 @@ import { SearchParam } from '.';
 export const useProjects = (searchParam: SearchParam) => {
   const http = useHttp();
   const { run, data, ...result } = useAsync<ProjectInfo[]>();
-  const getProject = () =>
-    http('/projects', { data: cleanObject(searchParam || {}) });
+  const getProject = useCallback(
+    () => http('/projects', { data: cleanObject(searchParam || {}) }),
+    [http, searchParam]
+  );
   useEffect(() => {
     run(getProject(), { retry: getProject });
-  }, [searchParam]);
+  }, [searchParam, getProject, run]);
 
   return {
     projects: data || [],
@@ -27,9 +29,11 @@ export const useProjects = (searchParam: SearchParam) => {
 export const useUsers = () => {
   const http = useHttp();
   const { run, data, ...result } = useAsync<UserInfo[]>();
-  useMount(() => {
-    run(http('/users'));
-  });
+  useMount(
+    useCallback(() => {
+      run(http('/users'));
+    }, [run, http])
+  );
 
   return {
     users: data || [],

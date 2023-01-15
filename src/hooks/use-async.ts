@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 interface State<T> {
   stat: 'idle' | 'loading' | 'success' | 'error';
@@ -33,35 +33,52 @@ const useAsync = <T>(initialState?: State<T>, initialConfig?: Config) => {
     ...(initialConfig || {}),
   };
 
-  const setData = (data: T) => setState({ data, stat: 'success', error: null });
+  const setData = useCallback(
+    (data: T) =>
+      setState((prevState) => ({
+        ...prevState,
+        data,
+        stat: 'success',
+        error: null,
+      })),
+    [setState]
+  );
 
-  const setError = (error: Error) =>
-    setState({ error, stat: 'error', data: null });
+  const setError = useCallback(
+    (error: Error) =>
+      setState((prevState) => ({
+        ...prevState,
+        error,
+        stat: 'error',
+        data: null,
+      })),
+    [setState]
+  );
 
-  const run = (
-    promiseRequest: Promise<T>,
-    retryConfig?: { retry: () => Promise<T> }
-  ) => {
-    if (!promiseRequest || !promiseRequest.then) {
-      throw new Error('请传入 promise 数据类型');
-    }
+  const run = useCallback(
+    (promiseRequest: Promise<T>, retryConfig?: { retry: () => Promise<T> }) => {
+      if (!promiseRequest || !promiseRequest.then) {
+        throw new Error('请传入 promise 数据类型');
+      }
 
-    if (retryConfig?.retry) {
-      setRetry(() => () => run(retryConfig.retry(), retryConfig));
-    }
+      if (retryConfig?.retry) {
+        setRetry(() => () => run(retryConfig.retry(), retryConfig));
+      }
 
-    setState({ ...state, stat: 'loading' });
+      setState((prevState) => ({ ...prevState, stat: 'loading' }));
 
-    return promiseRequest
-      .then((data) => {
-        setData(data);
-        return data;
-      })
-      .catch((error) => {
-        setError(error);
-        return config.throwOnError ? Promise.reject(error) : error;
-      });
-  };
+      return promiseRequest
+        .then((data) => {
+          setData(data);
+          return data;
+        })
+        .catch((error) => {
+          setError(error);
+          return config.throwOnError ? Promise.reject(error) : error;
+        });
+    },
+    [config.throwOnError, setData, setError]
+  );
 
   return {
     isIdle: state.stat === 'idle',

@@ -1,12 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
 import { cleanObject } from 'utils/obj';
 
 export const useUrlQueryParams = <K extends string>(keys: K[]) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [stateKeys] = useState(keys);
   return [
     useMemo(() => {
-      return keys.reduce(
+      return stateKeys.reduce(
         (prev, key) => {
           prev[key] = searchParams.get(key) || '';
           return prev;
@@ -15,9 +16,7 @@ export const useUrlQueryParams = <K extends string>(keys: K[]) => {
           [P in K]: string;
         }
       );
-      // 依赖keys会导致无限循环 keys是普通对象
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchParams]),
+    }, [searchParams, stateKeys]),
     (params: Partial<{ [P in K]: any }>) => {
       const param = cleanObject({
         ...Object.fromEntries(searchParams),
