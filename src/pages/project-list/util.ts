@@ -2,17 +2,18 @@ import { useHttp } from 'api/http';
 import { useMount } from 'hooks';
 import { useUrlQueryParams } from 'hooks/url';
 import useAsync from 'hooks/use-async';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ProjectInfo } from 'types/project';
 import { UserInfo } from 'types/user';
 import { cleanObject } from 'utils/obj';
 import { SearchParam } from '.';
 
-export const useProjects = (searchParam: SearchParam) => {
+export const useProjects = (params: SearchParam = {}) => {
   const http = useHttp();
+  const [searchParam] = useState(params);
   const { run, data, ...result } = useAsync<ProjectInfo[]>();
   const getProject = useCallback(
-    () => http('/projects', { data: cleanObject(searchParam || {}) }),
+    () => http('/projects', { data: cleanObject(searchParam) }),
     [http, searchParam]
   );
   useEffect(() => {

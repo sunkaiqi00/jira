@@ -6,6 +6,7 @@ import { useAuth } from 'context/auth-context';
 
 import { Header, HeaderLeft, HeaderRight } from './styled';
 import { ReactComponent as SoftWareLogo } from '../../assets/software-logo.svg';
+import { ProjectPopover } from 'components/project';
 
 const PageHeader = () => {
   const navigate = useNavigate();
@@ -30,7 +31,8 @@ const PageHeader = () => {
         >
           <SoftWareLogo width="12rem" color="rgb(38, 132, 255)" />
         </Button>
-        <h3>项目</h3>
+        {/* <h3>项目</h3> */}
+        <ProjectPopover />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>
